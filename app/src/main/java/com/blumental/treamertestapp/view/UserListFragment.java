@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blumental.treamertestapp.App;
 import com.blumental.treamertestapp.R;
 import com.blumental.treamertestapp.model.User;
 import com.blumental.treamertestapp.presenter.UserListPresenter;
@@ -31,6 +32,7 @@ public class UserListFragment extends Fragment implements UserListView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        presenter = App.component.userListPresenter();
         presenter.attach(this);
     }
 
