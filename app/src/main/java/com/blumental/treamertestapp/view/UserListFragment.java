@@ -1,5 +1,6 @@
 package com.blumental.treamertestapp.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blumental.treamertestapp.R;
+import com.blumental.treamertestapp.model.User;
+import com.blumental.treamertestapp.presenter.UserListPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserListFragment extends Fragment {
+public class UserListFragment extends Fragment implements UserListView {
+
+    private UserListPresenter presenter;
+
+    private UserListAdapter adapter;
 
     @BindView(R.id.userList)
     RecyclerView userList;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        presenter.attach(this);
+    }
 
     @Nullable
     @Override
@@ -26,9 +41,37 @@ public class UserListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_list, container, false);
         ButterKnife.bind(this, view);
 
-        userList.setLayoutManager(new LinearLayoutManager(getContext()));
-        userList.setAdapter(new UserListAdapter());
+        initializeUserList();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        presenter.detach();
+    }
+
+    @Override
+    public void showUsers(List<User> users) {
+        adapter.setUsers(users);
+    }
+
+    private void initializeUserList() {
+        userList.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new UserListAdapter();
+        userList.setAdapter(adapter);
     }
 }
