@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private void switchToUserListFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.mainFrame, new UserListFragment())
+                .replace(R.id.mainFrame, new UserListFragment())
                 .commit();
     }
 }
