@@ -81,5 +81,6 @@ public class UserListFragment extends Fragment implements UserListView {
         userList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UserListAdapter();
         userList.setAdapter(adapter);
+        userList.addItemDecoration(new UserListItemDecoration());
     }
 }
