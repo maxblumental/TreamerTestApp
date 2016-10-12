@@ -1,12 +1,17 @@
 package com.blumental.treamertestapp.view;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.blumental.treamertestapp.model.User;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
@@ -19,12 +24,14 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.bind(users.get(position));
     }
 
     @Override
@@ -34,8 +41,16 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View itemView) {
+        @BindView(android.R.id.text1)
+        TextView text;
+
+        ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        void bind(User user) {
+            text.setText(user.getUsername());
         }
     }
 }
