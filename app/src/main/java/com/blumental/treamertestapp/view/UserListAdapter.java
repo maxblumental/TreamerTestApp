@@ -1,7 +1,5 @@
 package com.blumental.treamertestapp.view;
 
-import android.content.res.Resources;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.support.v4.content.res.ResourcesCompat.getColor;
 import static java.lang.String.format;
 
 class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
@@ -55,8 +54,7 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            setSecondaryTextColor(itemView.getResources());
+            initializeItemView(itemView);
         }
 
         void bind(User user) {
@@ -64,8 +62,11 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
             username.setText(format("@%s", user.getUsername()));
         }
 
-        private void setSecondaryTextColor(Resources resources) {
-            int textColor = ResourcesCompat.getColor(resources, R.color.secondaryText, null);
+        private void initializeItemView(View itemView) {
+            itemView.setBackgroundResource(R.drawable.user_list_item);
+            itemView.setClickable(true);
+
+            int textColor = getColor(itemView.getResources(), R.color.secondaryText, null);
             username.setTextColor(textColor);
         }
     }
