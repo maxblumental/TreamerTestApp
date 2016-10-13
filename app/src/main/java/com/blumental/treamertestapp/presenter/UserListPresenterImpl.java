@@ -31,16 +31,19 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     @Override
     public void onResume() {
+        view.showProgress();
         interactorSubscription = interactor.getUserList()
                 .subscribe(new Action1<List<User>>() {
                     @Override
                     public void call(List<User> users) {
                         view.showUsers(users);
+                        view.hideProgess();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         view.showError(throwable.getMessage());
+                        view.hideProgess();
                     }
                 });
     }

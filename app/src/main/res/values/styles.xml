@@ -6,6 +6,25 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="field">@style/field</item>
+        <item name="fieldTitle">@style/fieldTitle</item>
+        <item name="sectionTitle">@style/sectionTitle</item>
+    </style>
+
+    <style name="fieldTitle">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="field">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="sectionTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/secondaryText</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

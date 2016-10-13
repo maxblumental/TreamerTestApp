@@ -21,6 +21,12 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     private List<User> users;
 
+    private View.OnClickListener itemClickListener;
+
+    public UserListAdapter(View.OnClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
     public void setUsers(List<User> users) {
         this.users = users;
         notifyDataSetChanged();
@@ -30,7 +36,7 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, itemClickListener);
     }
 
     @Override
@@ -51,13 +57,15 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
         @BindView(android.R.id.text2)
         TextView username;
 
-        ViewHolder(View itemView) {
+        ViewHolder(View itemView, View.OnClickListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             initializeItemView(itemView);
+            itemView.setOnClickListener(listener);
         }
 
         void bind(User user) {
+            itemView.setTag(user);
             name.setText(user.getName());
             username.setText(format("@%s", user.getUsername()));
         }

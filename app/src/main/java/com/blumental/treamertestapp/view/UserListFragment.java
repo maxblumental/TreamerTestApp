@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.blumental.treamertestapp.App;
@@ -29,6 +30,9 @@ public class UserListFragment extends Fragment implements UserListView {
 
     @BindView(R.id.userList)
     RecyclerView userList;
+
+    @BindView(R.id.progessBar)
+    ProgressBar progressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -77,10 +81,35 @@ public class UserListFragment extends Fragment implements UserListView {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgess() {
+        progressBar.setVisibility(View.GONE);
+    }
+
     private void initializeUserList() {
         userList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new UserListAdapter();
+        adapter = new UserListAdapter(createOnItemClickListener());
         userList.setAdapter(adapter);
         userList.addItemDecoration(new UserListItemDecoration());
+    }
+
+    private View.OnClickListener createOnItemClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = (User) v.getTag();
+                if (user == null) {
+                    return;
+                }
+
+                MainActivity activity = (MainActivity) getActivity();
+                activity.switchToUserDetails(user);
+            }
+        };
     }
 }

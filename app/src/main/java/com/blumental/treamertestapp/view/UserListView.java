@@ -8,4 +8,8 @@ public interface UserListView {
     void showUsers(List<User> users);
 
     void showError(String errorMessage);
+
+    void showProgress();
+
+    void hideProgess();
 }

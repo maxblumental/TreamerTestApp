@@ -1,6 +1,9 @@
 package com.blumental.treamertestapp.model;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
 
     private Integer id;
     private String name;
@@ -10,6 +13,16 @@ public class User {
     private String phone;
     private String website;
     private Company company;
+
+    public User(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        username = in.readString();
+        email = in.readString();
+        address = in.readParcelable(getClass().getClassLoader());
+        phone = in.readString();
+        website = in.readString();
+    }
 
     public Integer getId() {
         return id;
@@ -74,4 +87,30 @@ public class User {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(username);
+        dest.writeString(email);
+        dest.writeParcelable(address, 0);
+        dest.writeString(phone);
+        dest.writeString(website);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
